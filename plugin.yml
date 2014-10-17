@@ -1,0 +1,8 @@
+name: ATUHC
+main: com.amazingthings.uhc.UHC
+version: 1.0
+description: >
+             UltraHardCore plugin by AT.
+commands:
+  start:
+    description: Starts the game.
