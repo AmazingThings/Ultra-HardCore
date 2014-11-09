@@ -1,40 +1,39 @@
 package com.amazingthings.uhc.commands;
 
-import java.util.Random;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import com.amazingthings.uhc.UHC;
+
 public class CommandStart implements CommandExecutor {
 
-	
-		Random rand = new Random();
-		int L = 1;
-		int H = 500;
+	public boolean started = false;
 
-		int randomX = (int) (Math.random() * (H - L)) + L;
-		int randomZ = (int) (Math.random() * (H - L)) + L;
-
-	
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if(command.getName().equalsIgnoreCase("start")) {
 			Player player = (Player) sender;
 			for(Player online : Bukkit.getOnlinePlayers()) {
-				player.sendMessage("Started the game.");
-				online.sendMessage(ChatColor.RED + "[UHC]" + ChatColor.RESET + "Game Started!");
-				online.teleport(new Location(online.getWorld(), randomX, online.getWorld().getHighestBlockYAt(randomX, randomZ) + 1, randomZ));
-				randomX = (int) (Math.random() * (H - L)) + L;
-				randomZ = (int) (Math.random() * (H - L)) + L;
-				return true;
+				if(started = false) {
+					player.sendMessage("Started the game.");
+					online.sendMessage(ChatColor.RED + "[UHC]" + ChatColor.RESET + "Game Started!");
+					UHC.hasStarted = true;
+					started = true;
+					return true;
+				} else if (started = true) {
+					player.sendMessage("Forced game to stop.");
+					online.sendMessage(ChatColor.RED + "[UHC]" + ChatColor.RESET + "Game stopped by Admin!");
+					UHC.hasStarted = false;
+					started = false;
+					return true;
+				}
+
 			}
 		}
 		return false;
 	}
-
 }
